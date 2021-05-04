@@ -20,6 +20,8 @@ router.get('/', async (req, res, next) => {
     
 });
 
+// GET Route For Creating A New Book
+
 router.get('/new', (req, res, next) => {
 
     const title = 'New Book';
@@ -29,6 +31,8 @@ router.get('/new', (req, res, next) => {
 
 });
 
+// POST Route For Inserting A Newly Created Book
+
 router.post('/new', async (req, res, next) => {
 
     const book = req.body;
@@ -36,6 +40,8 @@ router.post('/new', async (req, res, next) => {
     res.redirect('/');
 
 });
+
+// GET Route For Reviewing A Book
 
 router.get('/:id', async (req, res, next) => {
 
@@ -52,6 +58,30 @@ router.get('/:id', async (req, res, next) => {
         return next();
 
     res.render('update-book.pug', { title, headline, book });
+
+});
+
+// POST Route For Updating A Book
+
+router.post('/:id', async (req, res, next) => {
+
+    const { id } = req.params;
+    const { title, author, genre, year } = req.body;
+
+    await Book.update({ title, author, genre, year }, { where: { id: + id } });
+    res.redirect('/');
+
+});
+
+// POST Route For Deleting A Book
+
+router.post('/:id/delete', async (req, res, next) => {
+
+    const { id } = req.params;
+    const book = await Book.findByPk(+ id);
+
+    await Book.destroy({ where: { id: + id} });
+    res.redirect('/');
 
 });
 
