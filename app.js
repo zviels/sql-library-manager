@@ -17,6 +17,10 @@ app.set('view engine', 'pug');
 
 app.use('/static', express.static('public'));
 
+// Allow Express To Parse HTML Forms Easily
+
+app.use(express.urlencoded({ extended: true }));
+
 // Routes
 
 app.use(mainRoutes);

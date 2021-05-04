@@ -20,12 +20,32 @@ router.get('/', async (req, res, next) => {
     
 });
 
+router.get('/new', (req, res, next) => {
+
+    const title = 'New Book';
+    const headline = 'Add New Book';
+
+    res.render('new-book', { title, headline });
+
+});
+
+router.post('/new', async (req, res, next) => {
+
+    const book = req.body;
+    await Book.create(book);
+    res.redirect('/');
+
+});
+
 router.get('/:id', async (req, res, next) => {
 
     const title = 'Book Details';
     const headline = 'Update Book';
-
     const { id } = req.params;
+
+    // if (isNaN(+ id))
+    //     return next();
+
     const book = await Book.findByPk(+ id);
 
     if (!(book))
