@@ -1,3 +1,23 @@
+// Async Operation Handler
+
+const handleAsyncOperation = (callback) => {
+
+    return async (req, res, next) => {
+
+        try {
+
+            callback(req, res, next);
+
+        } catch (error) {
+
+            next(error);
+
+        }
+
+    }
+
+}
+
 // 404 Handler
 
 const handlePageNotFoundError = (req, res, next) => {
@@ -26,4 +46,4 @@ const handleGlobalError = (error, req, res, next) => {
 
 // Export Error Handlers
 
-module.exports = { handlePageNotFoundError, handleGlobalError };
+module.exports = { handleAsyncOperation, handlePageNotFoundError, handleGlobalError };
