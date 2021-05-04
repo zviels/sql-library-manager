@@ -20,6 +20,21 @@ router.get('/', async (req, res, next) => {
     
 });
 
+router.get('/:id', async (req, res, next) => {
+
+    const title = 'Book Details';
+    const headline = 'Update Book';
+
+    const { id } = req.params;
+    const book = await Book.findByPk(+ id);
+
+    if (!(book))
+        return next();
+
+    res.render('update-book.pug', { title, headline, book });
+
+});
+
 // Export Routes
 
 module.exports = router;
