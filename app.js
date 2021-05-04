@@ -1,37 +1,29 @@
 const express = require('express');
 const { sequelize } = require('./models');
 
+const mainRoutes = require('./routes');
+const { handlePageNotFoundError, handleGlobalError } = require('./errorHandlers');
+
 // Variables
 
 const app = express();
 
-// Test DB Connection
+// Set Up View Engine
 
-async function testDB() {
+app.set('view engine', 'pug');
 
-    try {
+// Set Up Static Server
 
-        await sequelize.authenticate();
-        await sequelize.sync();
-
-        console.log('Connected Successfuly!');
-
-    } catch (error) {
-
-        console.log('Connection Failed.');
-
-    }
-
-}
+app.use('/static', express.static('public'));
 
 // Routes
 
-app.get('/', (req, res) => {
+app.use(mainRoutes);
 
-    testDB();
-    res.send('Hello!');
+// Error Handlers
 
-});
+app.use(handlePageNotFoundError);
+app.use(handleGlobalError);
 
 // Start The Server
 
