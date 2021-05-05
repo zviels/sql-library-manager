@@ -1,18 +1,23 @@
 extends layout 
 block content 
+    if errors 
+        h2.error Oops! Looks Like An Error Occurred! 
+        ul.error 
+            each error in errors 
+                li #{ error.message }
     form(action=`/books/new` method="POST")
         p 
             label(for="title") Title 
-            input(name="title" type="text" id="title" value="")
+            input(name="title" type="text" id="title" value= book ? book.title : "")
         p 
             label(for="author") Author 
-            input(name="author" type="text" id="author" value="")
+            input(name="author" type="text" id="author" value= book ? book.author : "")
         p 
             label(for="genre") Genre 
-            input(name="genre" type="text" id="genre" value="")
+            input(name="genre" type="text" id="genre" value= book ? book.genre : "")
         p 
             label(for="year") Year 
-            input(name="year" type="text" id="year" value="")  
+            input(name="year" type="text" id="year" value= book ? book.year : "")  
         p 
             input(type="submit" value="Create New Book")
         p

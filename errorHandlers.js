@@ -1,3 +1,5 @@
+const { Book } = require('./models');
+
 // Async Operation Handler
 
 const handleAsyncOperation = (callback) => {
@@ -6,7 +8,7 @@ const handleAsyncOperation = (callback) => {
 
         try {
 
-            callback(req, res, next);
+            await callback(req, res, next);
 
         } catch (error) {
 
@@ -31,6 +33,46 @@ const handlePageNotFoundError = (req, res, next) => {
 
 }
 
+// Sequelize Error Handler
+
+const handleSequelizeValidationError = async (error, req, res, next) => {
+
+    const { name } = error;
+    const { errors } = error;
+    const url = req.originalUrl;
+
+    if (name === 'SequelizeValidationError') {
+
+        if (url.includes('/books/new')) {
+
+            // Display Validation Errors When Creating A New Book
+
+            const book = await Book.build(req.body);
+            res.render('new-book', { title: 'New Book', headline: 'Add New Book', book, errors });
+
+        }
+
+        else {
+
+            // Display Validation Errors When Updating A Book
+    
+            const book = await Book.build(req.body);
+    
+            // For Some Reason, Book ID Becomes 'Null' When It Reaches The Error Handler, And No Parameters Are Defined.
+            // The Following Line Makes Sure The App Won't Break.
+    
+            book.id = + url.match(/\d+/)[0];
+            res.render('update-book', { title: 'Book Details', headline: 'Update Book', book, errors });
+
+        }
+
+    }
+
+    else
+        next(error);
+
+}
+
 // Global Error Handler
 
 const handleGlobalError = (error, req, res, next) => {
@@ -46,4 +88,4 @@ const handleGlobalError = (error, req, res, next) => {
 
 // Export Error Handlers
 
-module.exports = { handleAsyncOperation, handlePageNotFoundError, handleGlobalError };
+module.exports = { handleAsyncOperation, handleSequelizeValidationError, handlePageNotFoundError, handleGlobalError };

@@ -3,7 +3,7 @@ const { sequelize } = require('./models');
 
 const mainRoutes = require('./routes');
 const bookRoutes = require('./routes/books');
-const { handlePageNotFoundError, handleGlobalError } = require('./errorHandlers');
+const { handlePageNotFoundError, handleSequelizeValidationError, handleGlobalError } = require('./errorHandlers');
 
 // Variables
 
@@ -29,6 +29,7 @@ app.use('/books', bookRoutes);
 // Error Handlers
 
 app.use(handlePageNotFoundError);
+app.use(handleSequelizeValidationError);
 app.use(handleGlobalError);
 
 // Start The Server
