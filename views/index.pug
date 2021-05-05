@@ -1,7 +1,14 @@
 extends layout 
-block content 
+block content
+    h2 Add Books
     p 
-        a.button(href="/books/new") Create New Book 
+        a.button(href="/books/new") Create New Book
+    h2= q ? 'Find More Books' : 'Find Books' 
+    form(action="/search" method="GET")  
+        p
+            input(type="text" name="q" id="search-box" placeholder="Search The Library ...")     
+            input.search-button(type="submit" value="🔍")  
+    h2= q ? `Books That Match Your Search ("${q.toUpperCase()}")` : 'All Books'                          
     table 
         thead 
             tr 
@@ -16,4 +23,7 @@ block content
                         a(href=`/books/${book.id}`) #{ book.title } 
                     td #{ book.author } 
                     td #{ book.genre } 
-                    td #{ book.year }           
+                    td #{ book.year }    
+    if q 
+        p 
+            a.button(href="/") Go Back To All Books                

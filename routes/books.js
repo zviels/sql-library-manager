@@ -11,11 +11,9 @@ const router = express.Router();
 router.get('/', handleAsyncOperation (async (req, res, next) => {
     
     const title = 'Home';
-    const headline = 'Books';
-
-    const books = await Book.findAll();
+    const books = await Book.findAll({ order: [['year', 'DESC']] });
     
-    res.render('index.pug', { title, headline, books });
+    res.render('index.pug', { title, books });
     
 }));
 
@@ -24,9 +22,7 @@ router.get('/', handleAsyncOperation (async (req, res, next) => {
 router.get('/new', (req, res, next) => {
 
     const title = 'New Book';
-    const headline = 'Add New Book';
-
-    res.render('new-book', { title, headline });
+    res.render('new-book', { title });
 
 });
 
@@ -45,7 +41,6 @@ router.post('/new', handleAsyncOperation (async (req, res, next) => {
 router.get('/:id', handleAsyncOperation (async (req, res, next) => {
 
     const title = 'Book Details';
-    const headline = 'Update Book';
     const { id } = req.params;
 
     const book = await Book.findByPk(+ id);
@@ -53,7 +48,7 @@ router.get('/:id', handleAsyncOperation (async (req, res, next) => {
     if (!(book))
         return next();
 
-    res.render('update-book.pug', { title, headline, book });
+    res.render('update-book.pug', { title, book });
 
 }));
 

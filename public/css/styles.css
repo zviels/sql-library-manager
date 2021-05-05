@@ -95,3 +95,12 @@ input[type=text] {
 .error {
   color: rgb(236, 15, 15);
 }
+
+form p .search-button {
+  margin-left: 5px;
+  background-color: rgba(225, 225, 225, 0.8);
+}
+
+form p .search-button:hover {
+  background-color: rgba(215, 215, 215, 0.8);
+}
