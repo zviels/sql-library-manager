@@ -10,10 +10,18 @@ const router = express.Router();
 
 router.get('/', handleAsyncOperation (async (req, res, next) => {
     
-    const title = 'Home';
-    const books = await Book.findAll({ order: [['year', 'DESC']] });
-    
-    res.render('index.pug', { title, books });
+    const { page } = req.query;
+
+    if (!(page))
+        return res.redirect('?page=1');
+
+    // The Limit Variable Defines The Number Of Books Per Page
+
+    const limit = 5;
+    const offset = limit * ((+ page) - 1);
+
+    const query = await Book.findAndCountAll({ order: [['year', 'DESC']], offset, limit });    
+    res.render('index.pug', { title: 'Home', numOfPages: query.count / limit, books: query.rows });
     
 }));
 
