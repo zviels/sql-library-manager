@@ -83,6 +83,8 @@ const handleGlobalError = (error, req, res, next) => {
     error.status = error.status || 500;
     error.description = error.description || 'Oops! It Looks Like The Server Encountered An Error!';
 
+    console.log('Global Error Handler Invoked. Error Status: ' + error.status);
+
     if (error.status === 404)
         res.status(error.status).render('page-not-found', { error, headline: error.message });
 
