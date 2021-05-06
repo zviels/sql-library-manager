@@ -20,8 +20,15 @@ router.get('/', handleAsyncOperation (async (req, res, next) => {
     const limit = 5;
     const offset = limit * ((+ page) - 1);
 
-    const query = await Book.findAndCountAll({ order: [['year', 'DESC']], offset, limit });    
-    res.render('index.pug', { title: 'Home', page, numOfPages: query.count / limit, books: query.rows });
+    const query = await Book.findAndCountAll({ order: [['year', 'DESC']], offset, limit }); 
+    
+    const numOfPages = Math.ceil(query.count / limit);
+    const books = query.rows;
+
+    if ((+ page) > numOfPages)
+        return next();
+
+    res.render('index.pug', { title: 'Home', page, numOfPages, books });
     
 }));
 
@@ -77,7 +84,7 @@ router.post('/:id', handleAsyncOperation (async (req, res, next) => {
 router.post('/:id/delete', handleAsyncOperation (async (req, res, next) => {
 
     const { id } = req.params;
-    const book = await Book.findByPk(+ id);
+    // const book = await Book.findByPk(+ id);
 
     await Book.destroy({ where: { id: + id} });
     res.redirect('/');

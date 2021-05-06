@@ -43,7 +43,13 @@ router.get('/search', handleAsyncOperation (async (req, res, next) => {
 
     });
 
-    res.render('index', { title: 'Search Results', page, numOfPages: query.count / limit, books: query.rows, q });
+    const numOfPages = Math.ceil(query.count / limit);
+    const books = query.rows;
+
+    if ((+ page) > numOfPages)
+        return next();
+
+    res.render('index', { title: 'Search Results', page, numOfPages, books, q });
 
 }));
 
