@@ -21,7 +21,7 @@ router.get('/', handleAsyncOperation (async (req, res, next) => {
     const offset = limit * ((+ page) - 1);
 
     const query = await Book.findAndCountAll({ order: [['year', 'DESC']], offset, limit });    
-    res.render('index.pug', { title: 'Home', numOfPages: query.count / limit, books: query.rows });
+    res.render('index.pug', { title: 'Home', page, numOfPages: query.count / limit, books: query.rows });
     
 }));
 

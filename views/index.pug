@@ -24,11 +24,15 @@ block content
                     td #{ book.author } 
                     td #{ book.genre } 
                     td #{ book.year }  
-    ul                  
-    - let i = 0;
-    while i < numOfPages  
-        a(class="pagination-button" href=`/books?page=${++ i}`) #{ i } 
+    p.pagination-container                 
+        - let i = 0;
+        while i < numOfPages
+            if q 
+                a(class=`${ i + 1 == page ? 'pagination-button active' : 'pagination-button' }` href=`/search?q=${q}&page=${++ i}`) #{ i } 
+            else
+                a(class=`${ i + 1 == page ? 'pagination-button active' : 'pagination-button' }` href=`/books?page=${++ i}`) #{ i } 
 
-    if q 
+    if q
+        h2 Didn't Find What You Were Looking For?
         p 
             a.button(href="/") Go Back To All Books                

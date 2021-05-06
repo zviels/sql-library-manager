@@ -14,9 +14,15 @@ router.get('/', (req, res) => res.redirect('/books'));
 
 router.get('/search', handleAsyncOperation (async (req, res, next) => {
 
-    const { q } = req.query;
+    const { q, page } = req.query;
+
+    if (!(page))
+        return res.redirect('?q=' + q + '&page=1');
+
+    const limit = 5;
+    const offset = limit * ((+ page) - 1);
     
-    const books = await Book.findAll({ 
+    const query = await Book.findAndCountAll({ 
 
         where: {
 
@@ -29,11 +35,15 @@ router.get('/search', handleAsyncOperation (async (req, res, next) => {
 
             ]
 
-        }
+        },
+
+        order: [['year', 'DESC']],
+        offset,
+        limit        
 
     });
 
-    res.render('index', { title: 'Search Results', books, q });
+    res.render('index', { title: 'Search Results', page, numOfPages: query.count / limit, books: query.rows, q });
 
 }));
 

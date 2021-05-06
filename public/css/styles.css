@@ -1,12 +1,12 @@
 body {
   padding: 10px 50px 50px;
-  font: 18px "Garamond", serif;
+  font: 18px "Merriweather", serif;
 }
 
-a {
+a, input[type="submit"] {
   color: #019875;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: bold;
   transition: 0.4s;
 }
 
@@ -17,7 +17,7 @@ a {
 a.button, input[type=submit] {
   color: white;
   background: #019875;
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", sans-serif;
   padding: 10px 14px 12px;
   font-size: 14px;
   border-radius: 2px;
@@ -80,7 +80,7 @@ label {
 
 input {
   padding: 10px;
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   border-radius: 2px;
   border-color: #E7E7E7;
@@ -93,14 +93,72 @@ input[type=text] {
 }
 
 .error {
-  color: rgb(236, 15, 15);
+  color: #AF3E4D;
 }
+
+/* Custom Styles */
 
 form p .search-button {
   margin-left: 5px;
+  padding-top: 12px;
   background-color: rgba(225, 225, 225, 0.8);
 }
 
 form p .search-button:hover {
   background-color: rgba(215, 215, 215, 0.8);
+}
+
+.pagination-button {
+  margin-right: 5px;
+  padding: 0.5em 0.85em;
+  background-color: #E7E7E7;
+  color: #019875;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 1px 8px 0 rgb(22 42 90 / 5%);
+  transition: 0.5s;
+}
+
+.pagination-button:hover {
+  background-color: #ececec;
+  color: #01b189;
+}
+
+.pagination-button.active {
+  background-color: #019875;
+  color: #fff;
+}
+
+input[type="submit"].update-button {
+  background-color: #3083DC;
+}
+
+input[type="submit"].update-button:hover {
+  background-color: #5197E1;
+}
+
+a.button.delete-button, input[type="submit"].delete-button {
+  background-color: #AF3E4D;
+}
+
+input[type="submit"].delete-button:hover {
+  background-color: #BF4A5A;
+}
+
+a.button.cancel-button {
+  background-color: #393D3F;
+}
+
+a.button.cancel-button:hover {
+  background-color: #4E5356;
+}
+
+/* The Following CSS Rule Fixes The Width Of The Last Pagination Button */
+
+.pagination-container .pagination-button:last-child {
+  padding: 0.5em 0.9805em;
 }
