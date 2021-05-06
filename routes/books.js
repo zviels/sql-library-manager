@@ -22,13 +22,14 @@ router.get('/', handleAsyncOperation (async (req, res, next) => {
 
     const query = await Book.findAndCountAll({ order: [['year', 'DESC']], offset, limit }); 
     
-    const numOfPages = Math.ceil(query.count / limit);
+    const numOfResults = query.count;
+    const numOfPages = Math.ceil(numOfResults / limit);
     const books = query.rows;
 
-    if ((+ page) > numOfPages)
+    if (numOfResults && (+ page) > numOfPages)
         return next();
 
-    res.render('index.pug', { title: 'Home', page, numOfPages, books });
+    res.render('index.pug', { title: 'Home', page, numOfResults, numOfPages, books });
     
 }));
 
