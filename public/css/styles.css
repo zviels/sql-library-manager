@@ -162,3 +162,47 @@ a.button.cancel-button:hover {
 .pagination-container .pagination-button:last-child {
   padding: 0.5em 0.9805em;
 }
+
+/* Styles For Modal Window */
+
+.modal-container {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal-box {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 10px 20px;
+  border: 1px solid #888;
+  width: 70%;
+  text-transform: uppercase;
+}
+
+.modal-box .delete-button {
+  margin-right: 15px;
+}
+
+.modal-box .delete-button, .modal-box .cancel-button {
+  margin-left: 0;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 1.5em;
+  font-weight: bold;
+  transition: 0.5s;
+}
+
+.close-button:hover, .close-button:focus {
+  color: #4E5356;
+  /* text-decoration: none; */
+  cursor: pointer;
+}

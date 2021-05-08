@@ -29,7 +29,6 @@ const handlePageNotFoundError = (req, res, next) => {
     error.status = 404;
     error.description = 'Oops! The Page You Are Looking For Does Not Exist!';
 
-    // res.status(404).render('page-not-found', { error, headline: error.message });
     next(error);
 
 }
@@ -82,8 +81,6 @@ const handleGlobalError = (error, req, res, next) => {
     
     error.status = error.status || 500;
     error.description = error.description || 'Oops! It Looks Like The Server Encountered An Error!';
-
-    console.log('Global Error Handler Invoked. Error Status: ' + error.status);
 
     if (error.status === 404)
         res.status(error.status).render('page-not-found', { error, headline: error.message });
